@@ -10,7 +10,7 @@ import java.io.Serializable;
 public abstract class SimpleDroidMVPPresenter<V extends DroidMVPView, M extends Serializable>
     implements DroidMVPPresenter<V> {
 
-    protected M presentationModel;
+    private M presentationModel;
     private   V mvpView;
 
     public SimpleDroidMVPPresenter(M presentationModel) {
@@ -19,6 +19,10 @@ public abstract class SimpleDroidMVPPresenter<V extends DroidMVPView, M extends 
 
     @Override public void attachView(V mvpView) {
         this.mvpView = mvpView;
+    }
+
+    public M getPresentationModel() {
+        return presentationModel;
     }
 
     @Override public void detachView() {

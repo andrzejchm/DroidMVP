@@ -17,13 +17,15 @@
 package io.appflate.droidmvp.base;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.Serializable;
 
 /**
  * Created by andrzejchm on 16/05/16.
  */
-public abstract class DroidMVPDelegate< M extends Serializable, V extends DroidMVPView, P extends DroidMVPPresenter<V>> {
+public abstract class DroidMVPDelegate<M extends Serializable, V extends DroidMVPView, P extends DroidMVPPresenter<V>> {
 
     private P presenter;
     private M presentationModel;
@@ -39,11 +41,15 @@ public abstract class DroidMVPDelegate< M extends Serializable, V extends DroidM
         this.presenter = createPresenter(presentationModel);
     }
 
+    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
     protected void onStop() {
+        checkPresenter();
         presenter.detachView();
     }
 
+    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
     protected void onDestroy() {
+        checkPresenter();
         presenter.onDestroy();
     }
 
@@ -51,7 +57,9 @@ public abstract class DroidMVPDelegate< M extends Serializable, V extends DroidM
         outState.putSerializable(presentationModelKey, presentationModel);
     }
 
+    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
     protected void onStart(V mvpView) {
+        checkPresenter();
         presenter.attachView(mvpView);
     }
 
@@ -59,9 +67,16 @@ public abstract class DroidMVPDelegate< M extends Serializable, V extends DroidM
         return presenter;
     }
 
-    protected abstract P createPresenter(M presentationModel);
+    @NonNull protected abstract P createPresenter(M presentationModel);
 
-    protected abstract M createPresentationModel();
+    @NonNull protected abstract M createPresentationModel();
+
+    private void checkPresenter() {
+        if (presenter == null) {
+            throw new IllegalStateException(
+                "call onCreate in DroidMVPDelegate, because presenter is missing");
+        }
+    }
 
     private M restorePresentationModel(Class stateViewClass, @Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {

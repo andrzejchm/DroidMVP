@@ -18,11 +18,10 @@ dependencies:
 ## Customize test commands
 test:
   override:
-    - case $CIRCLE_NODE_INDEX in 0) ./gradlew check -PpreDexLibraries=false ;; 1) ./gradlew :androidsample:assembleDebug :androidsample:assembleAndroidTest  -PpreDexLibraries=false ;; esac:
-        parallel: true
+    - ./gradlew check -PpreDexLibraries=false
   post:
-    - mkdir -p $CIRCLE_ARTIFACTS/androidsample/reports
-    - mkdir -p $CIRCLE_ARTIFACTS/androidsample/test-results
-    - cp -r androidsample/build/test-results/ $CIRCLE_ARTIFACTS/androidsample/test-results
-    - cp -r androidsample/build/reports/ $CIRCLE_ARTIFACTS/androidsample/reports
-    - cp -r androidsample/build/outputs/ $CIRCLE_ARTIFACTS/androidsample/outputs
+    - mkdir -p $CIRCLE_ARTIFACTS/sample/reports
+    - mkdir -p $CIRCLE_ARTIFACTS/sample/test-results
+    - cp -r sample/build/test-results/ $CIRCLE_ARTIFACTS/sample/test-results
+    - cp -r sample/build/reports/ $CIRCLE_ARTIFACTS/sample/reports
+    - cp -r sample/build/outputs/ $CIRCLE_ARTIFACTS/sample/outputs
