@@ -16,41 +16,35 @@
 
 package io.appflate.droidvmp.androidsample.model.presentation;
 
-import io.appflate.droidvmp.androidsample.model.User;
+import io.appflate.droidvmp.androidsample.model.Repository;
 import java.io.Serializable;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by andrzejchm on 21/06/16.
+ * Created by andrzejchm on 22/06/16.
  */
-public class MainPresentationModel implements Serializable {
-    private String login;
-    private User   user;
+public class RepositoriesPresentationModel implements Serializable {
+    public  List<Repository> repositories;
+    private String           username;
 
-    @Inject public MainPresentationModel() {
+    //No args constructor used for dagger
+    @Inject public RepositoriesPresentationModel() {
     }
 
-    public String getLogin() {
-        return login;
+    public RepositoriesPresentationModel(String username) {
+        this.username = username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public String getUsername() {
+        return username;
     }
 
-    public String getName() {
-        if (user == null) {
-            return null;
-        } else {
-            if (user.name == null) {
-                return user.login;
-            } else {
-                return user.name;
-            }
-        }
+    public void setRepositories(List<Repository> repositories) {
+        this.repositories = repositories;
     }
 }

@@ -17,14 +17,65 @@
 package io.appflate.droidvmp.androidsample.ui.presenters;
 
 import io.appflate.droidmvp.base.SimpleDroidMVPPresenter;
+import io.appflate.droidvmp.androidsample.domain.GithubApi;
+import io.appflate.droidvmp.androidsample.model.User;
 import io.appflate.droidvmp.androidsample.model.presentation.MainPresentationModel;
 import io.appflate.droidvmp.androidsample.ui.mvpviews.MainView;
+import javax.inject.Inject;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by andrzejchm on 21/06/16.
  */
-public class MainPresenter extends SimpleDroidMVPPresenter<MainView,MainPresentationModel> {
-    public MainPresenter(MainPresentationModel presentationModel) {
-        super(presentationModel);
+public class MainPresenter extends SimpleDroidMVPPresenter<MainView, MainPresentationModel> {
+    private final GithubApi githubApi;
+
+    //Keep in mind that you have to annotate your constructor with @Inject annotation
+    // for the injection to work properly.
+    @Inject MainPresenter(GithubApi githubApi) {
+        this.githubApi = githubApi;
+    }
+
+    @Override public void attachView(MainView mvpView, MainPresentationModel presentationModel) {
+        super.attachView(mvpView, presentationModel);
+        if (presentationModel.getName() != null) {
+            mvpView.showUserInfo(presentationModel.getName());
+        }
+    }
+
+    public void onSubmitClicked(String username) {
+        if (getMvpView() != null) {
+            getMvpView().showProgress();
+        }
+        getPresentationModel().setLogin(username);
+        githubApi.getUserProfile(username).enqueue(new Callback<User>() {
+            @Override public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    User body = response.body();
+                    getPresentationModel().setUser(body);
+                    if (getMvpView() != null) {
+                        getMvpView().showUserInfo(getPresentationModel().getName());
+                    }
+                } else {
+                    if (getMvpView() != null) {
+                        getMvpView().showResponseError();
+                    }
+                }
+            }
+
+            @Override public void onFailure(Call<User> call, Throwable t) {
+                if (getMvpView() != null) {
+                    getMvpView().showResponseError();
+                }
+            }
+        });
+    }
+
+    public void onShowReposClicked() {
+        if (getMvpView() != null) {
+            getMvpView().showRepositoriesScreen(getPresentationModel().getLogin());
+        }
     }
 }

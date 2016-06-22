@@ -14,20 +14,19 @@
  *  limitations under the License.
  */
 
-package io.appflate.droidmvp.base;
+package io.appflate.droidvmp.androidsample.ui.mvpviews;
 
-import java.io.Serializable;
+import io.appflate.droidmvp.base.DroidMVPView;
+import io.appflate.droidvmp.androidsample.model.Repository;
+import java.util.List;
 
 /**
- * Every presenter in the app must either implement this interface or extend SimpleDroidMVPPresenter
- * indicating the DroidMVPView type that wants to be attached with.
+ * Created by andrzejchm on 22/06/16.
  */
-public interface DroidMVPPresenter<V extends DroidMVPView, M extends Serializable> {
+public interface RepositoriesView extends DroidMVPView {
+    void showLoadingProgress();
 
-    void attachView(V mvpView, M presentationModel);
+    void showRepositoriesList(List<Repository> repositories);
 
-
-    void detachView();
-
-    void onDestroy();
+    void showRepositoriesFetchError();
 }
