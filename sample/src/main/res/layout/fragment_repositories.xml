@@ -23,7 +23,7 @@
     android:layout_height="match_parent"
     android:inAnimation="@android:anim/fade_in"
     android:outAnimation="@android:anim/fade_out"
-    tools:context=".ui.activities.ReposActivity">
+    tools:context=".ui.activities.RepositoriesActivity">
 
     <ProgressBar
         android:layout_width="wrap_content"

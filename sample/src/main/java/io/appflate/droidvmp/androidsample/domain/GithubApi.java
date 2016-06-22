@@ -33,6 +33,6 @@ public interface GithubApi {
     Call<User> getUserProfile(@Path("username") String username);
 
     @GET("users/{username}/repos")
-    Call<List<Repository>>  getUserRepos(@Path("username") String username);
+    Call<List<Repository>> getUserRepositories(@Path("username") String username);
 
 }

@@ -8,17 +8,14 @@ import java.io.Serializable;
  * can be accessed from the child classes by calling getMvpView().
  */
 public abstract class SimpleDroidMVPPresenter<V extends DroidMVPView, M extends Serializable>
-    implements DroidMVPPresenter<V> {
+    implements DroidMVPPresenter<V,M> {
 
     private M presentationModel;
     private   V mvpView;
 
-    public SimpleDroidMVPPresenter(M presentationModel) {
-        this.presentationModel = presentationModel;
-    }
-
-    @Override public void attachView(V mvpView) {
+    @Override public void attachView(V mvpView, M presentationModel) {
         this.mvpView = mvpView;
+        this.presentationModel = presentationModel;
     }
 
     public M getPresentationModel() {

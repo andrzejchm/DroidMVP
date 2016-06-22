@@ -25,7 +25,7 @@ import java.io.Serializable;
 /**
  * Created by andrzejchm on 16/05/16.
  */
-public abstract class DroidMVPDelegate<M extends Serializable, V extends DroidMVPView, P extends DroidMVPPresenter<V>> {
+public abstract class DroidMVPViewDelegate<M extends Serializable, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>> {
 
     private P presenter;
     private M presentationModel;
@@ -33,22 +33,20 @@ public abstract class DroidMVPDelegate<M extends Serializable, V extends DroidMV
     private String presentationModelKey;
 
     public void onCreate(DroidMVPView mvpView, @Nullable Bundle savedInstanceState) {
-        presentationModel = restorePresentationModel(getClass(), savedInstanceState);
         presentationModelKey = mvpView.getClass().getCanonicalName() + "$PresentationModel";
+        presentationModel = restorePresentationModel(getClass(), savedInstanceState);
         if (presentationModel == null) {
             presentationModel = createPresentationModel();
         }
         this.presenter = createPresenter(presentationModel);
     }
 
-    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
-    protected void onStop() {
+    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR") protected void onStop() {
         checkPresenter();
         presenter.detachView();
     }
 
-    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
-    protected void onDestroy() {
+    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR") protected void onDestroy() {
         checkPresenter();
         presenter.onDestroy();
     }
@@ -60,7 +58,8 @@ public abstract class DroidMVPDelegate<M extends Serializable, V extends DroidMV
     @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
     protected void onStart(V mvpView) {
         checkPresenter();
-        presenter.attachView(mvpView);
+        checkPresentationModel();
+        presenter.attachView(mvpView, presentationModel);
     }
 
     public P getPresenter() {
@@ -74,7 +73,14 @@ public abstract class DroidMVPDelegate<M extends Serializable, V extends DroidMV
     private void checkPresenter() {
         if (presenter == null) {
             throw new IllegalStateException(
-                "call onCreate in DroidMVPDelegate, because presenter is missing");
+                "call onCreate in DroidMVPViewDelegate, because presenter is missing");
+        }
+    }
+
+    private void checkPresentationModel() {
+        if (presentationModel == null) {
+            throw new IllegalStateException(
+                "seems like you forgot to create presentationModel in #createPresentationModel() method, or call the #onCreate() of this delegate");
         }
     }
 
