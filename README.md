@@ -21,7 +21,7 @@ DroidMVP is a small Android library to help you incorporate the [**MVP pattern**
 In our case a controller will be our presenter, which stores the view state within the Presentation Model. All the state manipulation happens within the Model class itself, but it is the Presenter who initiates those modifications.
 
 #####View
-Our passive view is the activity or fragment, which will be treated as a widget container with the ability to present different states driven by the presenter. All user interaction should be routed to the presenter.
+Our passive view is the activity or fragment, which will be treated as a widgets' (like TextView, ImageView etc.) container with the ability to present different states driven by the presenter. All user interaction should be routed to the presenter.
 
 ##Setup
 
