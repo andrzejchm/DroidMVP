@@ -53,7 +53,3 @@ This library makes it easy to use it with dependency injection frameworks like [
 A small android app which uses Dependency Injection along with **DroidMVP** can be found 
 [**here**](/sample)
 
-##TODO:
-
-* add to jitpack
-* add to android arsenal
