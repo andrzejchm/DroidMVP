@@ -76,6 +76,10 @@ public class RepositoriesFragment
         ButterKnife.bind(this, view);
     }
 
+    @Override public void showTitle(String username) {
+        getActivity().setTitle(username);
+    }
+
     @Override public void showLoadingProgress() {
         reposAnimator.setDisplayedChild(CHILD_PROGRESS_VIEW);
     }

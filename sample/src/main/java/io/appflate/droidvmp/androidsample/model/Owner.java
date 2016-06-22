@@ -17,11 +17,12 @@
 package io.appflate.droidvmp.androidsample.model;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
 /**
  * Created by andrzejchm on 23/04/16.
  */
-public class Owner {
+public class Owner implements Serializable {
     @SerializedName("login") public               String  login;
     @SerializedName("id") public                  int     id;
     @SerializedName("avatar_url") public          String  avatarUrl;

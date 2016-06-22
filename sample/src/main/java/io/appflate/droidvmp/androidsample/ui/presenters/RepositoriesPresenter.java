@@ -46,6 +46,7 @@ public class RepositoriesPresenter
         } else {
             mvpView.showRepositoriesList(presentationModel.repositories);
         }
+        mvpView.showTitle(presentationModel.getUsername());
     }
 
     private void getUserRepositories(RepositoriesPresentationModel presentationModel) {

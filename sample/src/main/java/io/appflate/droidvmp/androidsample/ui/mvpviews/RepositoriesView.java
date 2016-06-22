@@ -24,6 +24,8 @@ import java.util.List;
  * Created by andrzejchm on 22/06/16.
  */
 public interface RepositoriesView extends DroidMVPView {
+    void showTitle(String username);
+
     void showLoadingProgress();
 
     void showRepositoriesList(List<Repository> repositories);

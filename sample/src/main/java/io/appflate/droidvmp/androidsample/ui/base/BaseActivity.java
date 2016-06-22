@@ -33,7 +33,7 @@ public abstract class BaseActivity<M extends Serializable, V extends DroidMVPVie
     @NonNull @Override protected P createPresenter(M presentationModel) {
         //this field will be populated by field injeciton from dagger
         // your presenter should not accept the presentationModel as its constructor's paramteter.
-        // Instead, it will be provided in #attachView method.
+        // Instead, it will be provided to your presenter in #attachView method.
         return presenter;
     }
 }

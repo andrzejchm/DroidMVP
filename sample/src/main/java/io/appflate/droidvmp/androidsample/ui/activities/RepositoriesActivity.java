@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import io.appflate.droidvmp.androidsample.R;
 import io.appflate.droidvmp.androidsample.ui.fragments.RepositoriesFragment;
 import io.appflate.droidvmp.androidsample.utils.Constants;
 
@@ -28,13 +27,12 @@ public class RepositoriesActivity extends AppCompatActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repos);
         String username = getIntent().getStringExtra(Constants.PARAM_USERNAME);
         if (getSupportFragmentManager().findFragmentByTag(RepositoriesFragment.TAG) == null) {
             getSupportFragmentManager().beginTransaction()
-                                       .replace(R.id.fragment_container,
-                                                RepositoriesFragment.newInstance(username),
-                                                RepositoriesFragment.class.getCanonicalName())
+                                       .add(android.R.id.content,
+                                            RepositoriesFragment.newInstance(username),
+                                            RepositoriesFragment.class.getCanonicalName())
                                        .commit();
         }
     }
