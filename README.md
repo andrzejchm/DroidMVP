@@ -25,7 +25,23 @@ Our passive view is the activity or fragment, which will be treated as a widget 
 
 ##Setup
 
-setup goes here
+Add it in your root `build.gradle` at the end of repositories:
+  ```groovy  
+  allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+  }
+  ```
+  
+
+Add the dependency to your app's `build.gradle`
+```groovy  
+  dependencies {
+    compile 'com.github.andrzejchm:droidMVP:0.1.0'
+  }
+```
 
 ##Composition over inheritance
 If by any chance you cannot extend from `DroidMVPActivity` or `DroidMVPFragment` you can always use the `DroidMVPViewDelegate`. Just make sure to bind it with your activity's or fragment's lifecycle the same way the `DroidMVPFragment` or `DroidMVPActivity` does it.
