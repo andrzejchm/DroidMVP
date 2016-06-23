@@ -5,6 +5,9 @@
 DroidMVP is a small Android library to help you incorporate the [**MVP pattern**](http://antonioleiva.com/mvp-android/) along with [**Passive View**](http://martinfowler.com/eaaDev/PassiveScreen.html) and [**Presentation Model**](http://martinfowler.com/eaaDev/PresentationModel.html) (yes, those can be combined together :) ) within your Android project.
 
 ##Explanation 
+<p align="center">
+<img align="cetnter" src="mvp-diagram.png" alt="mvp diagram" />
+</p>
 
 **Pasive View**
 
