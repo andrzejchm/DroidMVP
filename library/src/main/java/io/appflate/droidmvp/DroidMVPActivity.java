@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package io.appflate.droidmvp.base;
+package io.appflate.droidmvp;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,8 +26,8 @@ public abstract class DroidMVPActivity<M extends Serializable, V extends DroidMV
     extends AppCompatActivity implements DroidMVPView {
 
     private DroidMVPViewDelegate<M, V, P> mvpDelegate = new DroidMVPViewDelegate<M, V, P>() {
-        @NonNull @Override protected P createPresenter(M presentationModel) {
-            return DroidMVPActivity.this.createPresenter(presentationModel);
+        @NonNull @Override protected P createPresenter() {
+            return DroidMVPActivity.this.createPresenter();
         }
 
         @NonNull @Override protected M createPresentationModel() {
@@ -61,9 +61,30 @@ public abstract class DroidMVPActivity<M extends Serializable, V extends DroidMV
         mvpDelegate.onStart((V) this);
     }
 
+    /**
+     * Used for performing field injection trough various dependency injection frameworks like
+     * Dagger. The injection is performed just before the #createPresenter() or
+     * #createPresentationModel() methods are called, so you can
+     * have your presenter and/or Presentation Model being injected by Dagger.
+     */
     protected abstract void performFieldInjection();
 
-    @NonNull protected abstract P createPresenter(M presentationModel);
+    /**
+     *  Used for creating the presenter instance, called in #onCreate(Bundle) method.
+     * @return an instance of your Presenter.
+     */
+    @NonNull protected abstract P createPresenter();
 
+    /**
+     * Used to create the Presentation Model that will be attached to your presenter in #onAttach()
+     * method of your presenter.
+     *
+     * NOTE: this will be called only if there is no Presentation Model persisted in your
+     * savedInstanceState!
+     *
+     * You can retrieve the arguments from your Intent's extra and pass it
+     * to your Presentation's model constructor.
+     * @return Presentation Model instance used by your Presenter.
+     */
     @NonNull protected abstract M createPresentationModel();
 }

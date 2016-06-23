@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package io.appflate.droidmvp.base;
+package io.appflate.droidmvp;
 
 /**
  * Base interface that any class that wants to act as a View in the MVP (Model-View-Presenter)

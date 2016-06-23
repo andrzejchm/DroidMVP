@@ -16,7 +16,7 @@
 
 package io.appflate.droidvmp.androidsample.ui.mvpviews;
 
-import io.appflate.droidmvp.base.DroidMVPView;
+import io.appflate.droidmvp.DroidMVPView;
 import io.appflate.droidvmp.androidsample.model.Repository;
 import java.util.List;
 
