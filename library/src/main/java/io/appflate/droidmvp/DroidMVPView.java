@@ -14,19 +14,13 @@
  *  limitations under the License.
  */
 
-package io.appflate.droidvmp.androidsample.ui.mvpviews;
-
-import io.appflate.droidmvp.DroidMVPView;
+package io.appflate.droidmvp;
 
 /**
- * Created by andrzejchm on 21/06/16.
+ * Base interface that any class that wants to act as a View in the MVP (Model-View-Presenter)
+ * pattern must implement. Generally this interface will be extended by a more specific interface
+ * that then usually will be implemented by an Activity or Fragment.
  */
-public interface MainView extends DroidMVPView {
-    void showProgress();
+public interface DroidMVPView {
 
-    void showUserInfo(String showUserFetchSuccess);
-
-    void showResponseError();
-
-    void showRepositoriesScreen(String currentUsername);
 }

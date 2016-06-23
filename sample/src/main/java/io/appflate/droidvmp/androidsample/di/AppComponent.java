@@ -16,11 +16,12 @@
 
 package io.appflate.droidvmp.androidsample.di;
 
+import io.appflate.droidvmp.androidsample.ui.fragments.RepositoriesFragment;
 import javax.inject.Singleton;
 
 import dagger.Component;
 import io.appflate.droidvmp.androidsample.ui.activities.MainActivity;
-import io.appflate.droidvmp.androidsample.ui.activities.ReposActivity;
+import io.appflate.droidvmp.androidsample.ui.activities.RepositoriesActivity;
 import io.appflate.droidvmp.androidsample.domain.GithubApi;
 
 /**
@@ -32,5 +33,6 @@ public interface AppComponent {
     GithubApi getRestService();
 
     void inject(MainActivity mainActivity);
-    void inject(ReposActivity reposActivity);
+    void inject(RepositoriesActivity repositoriesActivity);
+    void inject(RepositoriesFragment repositoriesFragment);
 }

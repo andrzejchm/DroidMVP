@@ -14,13 +14,15 @@
  *  limitations under the License.
  */
 
-package io.appflate.droidmvp.base;
+package io.appflate.droidvmp.androidsample.utils;
 
 /**
- * Base interface that any class that wants to act as a View in the MVP (Model View DroidMVPPresenter)
- * pattern must implement. Generally this interface will be extended by a more specific interface
- * that then usually will be implemented by an Activity or Fragment.
+ * Created by andrzejchm on 22/06/16.
  */
-public interface DroidMVPView {
 
+public final class Constants {
+    public static final String PARAM_USERNAME = "username";
+
+    private Constants() {
+    }
 }

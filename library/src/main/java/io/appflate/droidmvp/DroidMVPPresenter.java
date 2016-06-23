@@ -14,15 +14,18 @@
  *  limitations under the License.
  */
 
-package io.appflate.droidmvp.base;
+package io.appflate.droidmvp;
+
+import java.io.Serializable;
 
 /**
  * Every presenter in the app must either implement this interface or extend SimpleDroidMVPPresenter
  * indicating the DroidMVPView type that wants to be attached with.
  */
-public interface DroidMVPPresenter<V extends DroidMVPView> {
+public interface DroidMVPPresenter<V extends DroidMVPView, M extends Serializable> {
 
-    void attachView(V mvpView);
+    void attachView(V mvpView, M presentationModel);
+
 
     void detachView();
 
