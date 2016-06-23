@@ -17,9 +17,9 @@
 package io.appflate.droidvmp.androidsample.ui.base;
 
 import android.support.annotation.NonNull;
-import io.appflate.droidmvp.base.DroidMVPActivity;
-import io.appflate.droidmvp.base.DroidMVPPresenter;
-import io.appflate.droidmvp.base.DroidMVPView;
+import io.appflate.droidmvp.DroidMVPActivity;
+import io.appflate.droidmvp.DroidMVPPresenter;
+import io.appflate.droidmvp.DroidMVPView;
 import java.io.Serializable;
 import javax.inject.Inject;
 
@@ -30,7 +30,7 @@ public abstract class BaseActivity<M extends Serializable, V extends DroidMVPVie
     extends DroidMVPActivity<M, V, P> {
     @Inject protected P presenter;
 
-    @NonNull @Override protected P createPresenter(M presentationModel) {
+    @NonNull @Override protected P createPresenter() {
         //this field will be populated by field injeciton from dagger
         // your presenter should not accept the presentationModel as its constructor's paramteter.
         // Instead, it will be provided to your presenter in #attachView method.

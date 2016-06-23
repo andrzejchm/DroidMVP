@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package io.appflate.droidmvp.base;
+package io.appflate.droidmvp;
 
 import java.io.Serializable;
 

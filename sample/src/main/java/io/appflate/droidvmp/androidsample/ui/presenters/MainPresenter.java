@@ -16,7 +16,7 @@
 
 package io.appflate.droidvmp.androidsample.ui.presenters;
 
-import io.appflate.droidmvp.base.SimpleDroidMVPPresenter;
+import io.appflate.droidmvp.SimpleDroidMVPPresenter;
 import io.appflate.droidvmp.androidsample.domain.GithubApi;
 import io.appflate.droidvmp.androidsample.model.User;
 import io.appflate.droidvmp.androidsample.model.presentation.MainPresentationModel;
