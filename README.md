@@ -1,4 +1,9 @@
 # DroidMVP
+
+<p align="center">
+<img align="cetnter" src="droidMVP.png" alt="mvp diagram" />
+</p>
+
 [![Release](https://jitpack.io/v/andrzejchm/DroidMVP.svg)](https://jitpack.io/#andrzejchm/DroidMVP)[![CircleCI](https://circleci.com/gh/andrzejchm/DroidMVP/tree/develop.svg?style=svg)](https://circleci.com/gh/andrzejchm/DroidMVP/tree/develop)
 
 ##About
