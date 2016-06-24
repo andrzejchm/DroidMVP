@@ -58,22 +58,28 @@ public class RepositoriesPresenter
                      public void onResponse(Call<List<Repository>> call,
                          Response<List<Repository>> response) {
                          if (response.isSuccessful()) {
-                             getPresentationModel().setRepositories(response.body());
-                             if (getMvpView() != null) {
-                                 getMvpView().showRepositoriesList(response.body());
-                             }
+                             onRepositoriesFetched(response.body());
                          } else {
-                             if (getMvpView() != null) {
-                                 getMvpView().showRepositoriesFetchError();
-                             }
+                             onRepositoriesFetchError();
                          }
                      }
 
                      public void onFailure(Call<List<Repository>> call, Throwable t) {
-                         if (getMvpView() != null) {
-                             getMvpView().showRepositoriesFetchError();
-                         }
+                         onRepositoriesFetchError();
                      }
                  });
+    }
+
+    private void onRepositoriesFetchError() {
+        if (getMvpView() != null) {
+            getMvpView().showRepositoriesFetchError();
+        }
+    }
+
+    private void onRepositoriesFetched(List<Repository> repositories) {
+        getPresentationModel().setRepositories(repositories);
+        if (getMvpView() != null) {
+            getMvpView().showRepositoriesList(repositories);
+        }
     }
 }
