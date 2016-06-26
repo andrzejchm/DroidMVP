@@ -41,17 +41,17 @@ public class RepositoriesPresenter
     @Override public void attachView(RepositoriesView mvpView,
         RepositoriesPresentationModel presentationModel) {
         super.attachView(mvpView, presentationModel);
-        if (presentationModel.repositories == null) {
+        if (presentationModel.shouldFetchRepositories()) {
             getUserRepositories(presentationModel);
         } else {
-            mvpView.showRepositoriesList(presentationModel.repositories);
+            mvpView.showRepositoriesList(presentationModel.getRepositories());
         }
         mvpView.showTitle(presentationModel.getUsername());
     }
 
     private void getUserRepositories(RepositoriesPresentationModel presentationModel) {
         if (getMvpView() != null) {
-          getMvpView().showLoadingProgress();
+            getMvpView().showLoadingProgress();
         }
         githubApi.getUserRepositories(presentationModel.getUsername())
                  .enqueue(new Callback<List<Repository>>() {

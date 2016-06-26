@@ -25,18 +25,10 @@ import javax.inject.Inject;
  * Created by andrzejchm on 22/06/16.
  */
 public class RepositoriesPresentationModel implements Serializable {
-    public  List<Repository> repositories;
+    private  List<Repository> repositories;
     private String           username;
 
-    //No args constructor used for dagger
-    @Inject public RepositoriesPresentationModel() {
-    }
-
     public RepositoriesPresentationModel(String username) {
-        this.username = username;
-    }
-
-    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -46,5 +38,13 @@ public class RepositoriesPresentationModel implements Serializable {
 
     public void setRepositories(List<Repository> repositories) {
         this.repositories = repositories;
+    }
+
+    public List<Repository> getRepositories() {
+        return repositories;
+    }
+
+    public boolean shouldFetchRepositories() {
+        return repositories == null;
     }
 }
