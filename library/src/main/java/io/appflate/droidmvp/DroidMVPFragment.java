@@ -61,6 +61,10 @@ public abstract class DroidMVPFragment<M extends Serializable, V extends DroidMV
         mvpDelegate.onDestroy();
     }
 
+    @NonNull protected P getPresenter() {
+        return mvpDelegate.getPresenter();
+    }
+
     /**
      * Used for performing field injection trough various dependency injection frameworks like
      * Dagger. The injection is performed just before the #createPresenter() or

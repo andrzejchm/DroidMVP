@@ -61,6 +61,10 @@ public abstract class DroidMVPActivity<M extends Serializable, V extends DroidMV
         mvpDelegate.onStart((V) this);
     }
 
+    @NonNull protected P getPresenter() {
+        return mvpDelegate.getPresenter();
+    }
+
     /**
      * Used for performing field injection trough various dependency injection frameworks like
      * Dagger. The injection is performed just before the #createPresenter() or
@@ -70,7 +74,8 @@ public abstract class DroidMVPActivity<M extends Serializable, V extends DroidMV
     protected abstract void performFieldInjection();
 
     /**
-     *  Used for creating the presenter instance, called in #onCreate(Bundle) method.
+     * Used for creating the presenter instance, called in #onCreate(Bundle) method.
+     *
      * @return an instance of your Presenter.
      */
     @NonNull protected abstract P createPresenter();
@@ -84,6 +89,7 @@ public abstract class DroidMVPActivity<M extends Serializable, V extends DroidMV
      *
      * You can retrieve the arguments from your Intent's extra and pass it
      * to your Presentation's model constructor.
+     *
      * @return Presentation Model instance used by your Presenter.
      */
     @NonNull protected abstract M createPresentationModel();
