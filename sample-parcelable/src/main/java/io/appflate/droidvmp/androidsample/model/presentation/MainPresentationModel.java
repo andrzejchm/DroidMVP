@@ -16,15 +16,31 @@
 
 package io.appflate.droidvmp.androidsample.model.presentation;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import io.appflate.droidvmp.androidsample.model.User;
-import java.io.Serializable;
 
 /**
  * Created by andrzejchm on 21/06/16.
  */
-public class MainPresentationModel implements Serializable {
+public class MainPresentationModel implements Parcelable {
+    public static final Parcelable.Creator<MainPresentationModel> CREATOR =
+        new Parcelable.Creator<MainPresentationModel>() {
+            @Override public MainPresentationModel createFromParcel(
+                Parcel source) {return new MainPresentationModel(source);}
+
+            @Override public MainPresentationModel[] newArray(
+                int size) {return new MainPresentationModel[size];}
+        };
     private String login;
     private User   user;
+
+    public MainPresentationModel() {}
+
+    protected MainPresentationModel(Parcel in) {
+        this.login = in.readString();
+        this.user = in.readParcelable(User.class.getClassLoader());
+    }
 
     public String getLogin() {
         return login;
@@ -50,5 +66,10 @@ public class MainPresentationModel implements Serializable {
         }
     }
 
+    @Override public int describeContents() { return 0; }
 
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.login);
+        dest.writeParcelable(this.user, flags);
+    }
 }

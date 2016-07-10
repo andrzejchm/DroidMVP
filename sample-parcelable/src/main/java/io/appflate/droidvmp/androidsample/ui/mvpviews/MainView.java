@@ -14,19 +14,19 @@
  *  limitations under the License.
  */
 
-package io.appflate.droidvmp.androidsample.ui.base;
+package io.appflate.droidvmp.androidsample.ui.mvpviews;
 
-import io.appflate.droidmvp.DroidMVPActivity;
-import io.appflate.droidmvp.DroidMVPPresenter;
 import io.appflate.droidmvp.DroidMVPView;
 
 /**
- * Created by andrzejchm on 22/06/16.
+ * Created by andrzejchm on 21/06/16.
  */
-public abstract class BaseActivity<M, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>>
-    extends DroidMVPActivity<M, V, P> {
+public interface MainView extends DroidMVPView {
+    void showProgress();
 
-    @Override protected void performFieldInjection() {
-        //since we don't use any dependency injection framework here, lets make this method no-op.
-    }
+    void showUserInfo(String showUserFetchSuccess);
+
+    void showResponseError();
+
+    void showRepositoriesScreen(String currentUsername);
 }

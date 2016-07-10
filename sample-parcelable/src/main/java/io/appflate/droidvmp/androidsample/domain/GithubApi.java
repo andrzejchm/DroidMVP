@@ -14,4 +14,22 @@
  * limitations under the License.
  */
 
-include ':library', ':sample-dagger', ':sample', ':sample-parcelable'
+package io.appflate.droidvmp.androidsample.domain;
+
+import io.appflate.droidvmp.androidsample.model.Repository;
+import io.appflate.droidvmp.androidsample.model.User;
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+
+/**
+ * Created by andrzejchm on 22/04/16.
+ */
+public interface GithubApi {
+
+    @GET("users/{username}") Call<User> getUserProfile(@Path("username") String username);
+
+    @GET("users/{username}/repos") Call<List<Repository>> getUserRepositories(
+        @Path("username") String username);
+}

@@ -14,19 +14,15 @@
  *  limitations under the License.
  */
 
-package io.appflate.droidvmp.androidsample.ui.base;
-
-import io.appflate.droidmvp.DroidMVPActivity;
-import io.appflate.droidmvp.DroidMVPPresenter;
-import io.appflate.droidmvp.DroidMVPView;
+package io.appflate.droidvmp.androidsample.utils;
 
 /**
  * Created by andrzejchm on 22/06/16.
  */
-public abstract class BaseActivity<M, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>>
-    extends DroidMVPActivity<M, V, P> {
 
-    @Override protected void performFieldInjection() {
-        //since we don't use any dependency injection framework here, lets make this method no-op.
+public final class Constants {
+    public static final String PARAM_USERNAME = "username";
+
+    private Constants() {
     }
 }

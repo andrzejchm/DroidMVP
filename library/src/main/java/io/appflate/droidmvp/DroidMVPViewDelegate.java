@@ -93,7 +93,8 @@ public abstract class DroidMVPViewDelegate<M, V extends DroidMVPView, P extends 
     /**
      * Used by the delegate to persist current Presentation Model due to configuration change.
      */
-    public void onSaveInstanceState(Bundle outState) {
+    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR") public void onSaveInstanceState(
+        Bundle outState) {
         if (presentationModel instanceof Parcelable) {
             outState.putParcelable(presentationModelKey, (Parcelable) presentationModel);
         } else if (presentationModel instanceof Serializable) {

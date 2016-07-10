@@ -75,7 +75,7 @@ public class Repository implements Serializable {
     @SerializedName("ssh_url") public           String  sshUrl;
     @SerializedName("clone_url") public         String  cloneUrl;
     @SerializedName("svn_url") public           String  svnUrl;
-    @SerializedName("homepage") public          Object  homepage;
+    @SerializedName("homepage") public          String  homepage;
     @SerializedName("size") public              int     size;
     @SerializedName("stargazers_count") public  int     stargazersCount;
     @SerializedName("watchers_count") public    int     watchersCount;
@@ -85,7 +85,7 @@ public class Repository implements Serializable {
     @SerializedName("has_wiki") public          boolean hasWiki;
     @SerializedName("has_pages") public         boolean hasPages;
     @SerializedName("forks_count") public       int     forksCount;
-    @SerializedName("mirror_url") public        Object  mirrorUrl;
+    @SerializedName("mirror_url") public        String  mirrorUrl;
     @SerializedName("open_issues_count") public int     openIssuesCount;
     @SerializedName("forks") public             int     forks;
     @SerializedName("open_issues") public       int     openIssues;
