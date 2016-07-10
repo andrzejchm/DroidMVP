@@ -37,7 +37,7 @@ public abstract class DroidMVPFragment<M extends Serializable, V extends DroidMV
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        performFieldInection();
+        performFieldInjection();
         mvpDelegate.onCreate(this, savedInstanceState);
     }
 
@@ -67,7 +67,7 @@ public abstract class DroidMVPFragment<M extends Serializable, V extends DroidMV
      * #createPresentationModel() methods are called, so you can
      * have your presenter and/or Presentation Model being injected by Dagger.
      */
-    protected abstract void performFieldInection();
+    protected abstract void performFieldInjection();
 
     /**
      * Used for creating the presenter instance, called in #onCreate(Bundle) method.
@@ -85,6 +85,7 @@ public abstract class DroidMVPFragment<M extends Serializable, V extends DroidMV
      *
      * You can retrieve the arguments from #getArguments() method of your
      * fragment and pass it to your Presentation's model constructor.
+     *
      * @return Presentation Model instance used by your Presenter.
      */
     @NonNull protected abstract M createPresentationModel();

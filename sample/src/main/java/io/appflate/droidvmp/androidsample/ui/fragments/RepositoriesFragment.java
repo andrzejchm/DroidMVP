@@ -56,7 +56,7 @@ public class RepositoriesFragment
         SampleApplication.getComponent().inject(this);
     }
 
-    @Override protected void performFieldInection() {
+    @Override protected void performFieldInjection() {
         SampleApplication.getComponent().inject(this);
     }
 
