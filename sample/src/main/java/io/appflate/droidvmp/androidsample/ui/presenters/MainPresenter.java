@@ -21,7 +21,6 @@ import io.appflate.droidvmp.androidsample.domain.GithubApi;
 import io.appflate.droidvmp.androidsample.model.User;
 import io.appflate.droidvmp.androidsample.model.presentation.MainPresentationModel;
 import io.appflate.droidvmp.androidsample.ui.mvpviews.MainView;
-import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,9 +31,7 @@ import retrofit2.Response;
 public class MainPresenter extends SimpleDroidMVPPresenter<MainView, MainPresentationModel> {
     private final GithubApi githubApi;
 
-    //Keep in mind that you have to annotate your constructor with @Inject annotation
-    // for the injection to work properly.
-    @Inject MainPresenter(GithubApi githubApi) {
+    public MainPresenter(GithubApi githubApi) {
         this.githubApi = githubApi;
     }
 
@@ -53,22 +50,14 @@ public class MainPresenter extends SimpleDroidMVPPresenter<MainView, MainPresent
         githubApi.getUserProfile(username).enqueue(new Callback<User>() {
             @Override public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
-                    User body = response.body();
-                    getPresentationModel().setUser(body);
-                    if (getMvpView() != null) {
-                        getMvpView().showUserInfo(getPresentationModel().getName());
-                    }
+                    onUserProfileFetched(response.body());
                 } else {
-                    if (getMvpView() != null) {
-                        getMvpView().showResponseError();
-                    }
+                    onUserProfileFetchError();
                 }
             }
 
             @Override public void onFailure(Call<User> call, Throwable t) {
-                if (getMvpView() != null) {
-                    getMvpView().showResponseError();
-                }
+                onUserProfileFetchError();
             }
         });
     }
@@ -76,6 +65,19 @@ public class MainPresenter extends SimpleDroidMVPPresenter<MainView, MainPresent
     public void onShowReposClicked() {
         if (getMvpView() != null) {
             getMvpView().showRepositoriesScreen(getPresentationModel().getLogin());
+        }
+    }
+
+    private void onUserProfileFetchError() {
+        if (getMvpView() != null) {
+            getMvpView().showResponseError();
+        }
+    }
+
+    private void onUserProfileFetched(User user) {
+        getPresentationModel().setUser(user);
+        if (getMvpView() != null) {
+            getMvpView().showUserInfo(getPresentationModel().getName());
         }
     }
 }

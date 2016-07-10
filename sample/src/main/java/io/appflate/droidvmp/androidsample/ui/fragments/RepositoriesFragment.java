@@ -28,7 +28,7 @@ import android.widget.ViewAnimator;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.appflate.droidvmp.androidsample.R;
-import io.appflate.droidvmp.androidsample.SampleApplication;
+import io.appflate.droidvmp.androidsample.domain.ApiManager;
 import io.appflate.droidvmp.androidsample.model.Repository;
 import io.appflate.droidvmp.androidsample.model.presentation.RepositoriesPresentationModel;
 import io.appflate.droidvmp.androidsample.ui.adapters.ReposRecyclerAdapter;
@@ -53,11 +53,10 @@ public class RepositoriesFragment
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SampleApplication.getComponent().inject(this);
     }
 
-    @Override protected void performFieldInection() {
-        SampleApplication.getComponent().inject(this);
+    @NonNull @Override protected RepositoriesPresenter createPresenter() {
+        return new RepositoriesPresenter(ApiManager.getInstance().getApiService());
     }
 
     @NonNull @Override protected RepositoriesPresentationModel createPresentationModel() {

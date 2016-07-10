@@ -22,7 +22,6 @@ import io.appflate.droidvmp.androidsample.model.Repository;
 import io.appflate.droidvmp.androidsample.model.presentation.RepositoriesPresentationModel;
 import io.appflate.droidvmp.androidsample.ui.mvpviews.RepositoriesView;
 import java.util.List;
-import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,46 +33,52 @@ public class RepositoriesPresenter
     extends SimpleDroidMVPPresenter<RepositoriesView, RepositoriesPresentationModel> {
     private GithubApi githubApi;
 
-    @Inject public RepositoriesPresenter(GithubApi githubApi) {
+    public RepositoriesPresenter(GithubApi githubApi) {
         this.githubApi = githubApi;
     }
 
     @Override public void attachView(RepositoriesView mvpView,
         RepositoriesPresentationModel presentationModel) {
         super.attachView(mvpView, presentationModel);
-        if (presentationModel.repositories == null) {
+        if (presentationModel.shouldFetchRepositories()) {
             getUserRepositories(presentationModel);
         } else {
-            mvpView.showRepositoriesList(presentationModel.repositories);
+            mvpView.showRepositoriesList(presentationModel.getRepositories());
         }
         mvpView.showTitle(presentationModel.getUsername());
     }
 
     private void getUserRepositories(RepositoriesPresentationModel presentationModel) {
         if (getMvpView() != null) {
-          getMvpView().showLoadingProgress();
+            getMvpView().showLoadingProgress();
         }
         githubApi.getUserRepositories(presentationModel.getUsername())
                  .enqueue(new Callback<List<Repository>>() {
                      public void onResponse(Call<List<Repository>> call,
                          Response<List<Repository>> response) {
                          if (response.isSuccessful()) {
-                             getPresentationModel().setRepositories(response.body());
-                             if (getMvpView() != null) {
-                                 getMvpView().showRepositoriesList(response.body());
-                             }
+                             onRepositoriesFetched(response.body());
                          } else {
-                             if (getMvpView() != null) {
-                                 getMvpView().showRepositoriesFetchError();
-                             }
+                             onRepositoriesFetchError();
                          }
                      }
 
                      public void onFailure(Call<List<Repository>> call, Throwable t) {
-                         if (getMvpView() != null) {
-                             getMvpView().showRepositoriesFetchError();
-                         }
+                         onRepositoriesFetchError();
                      }
                  });
+    }
+
+    private void onRepositoriesFetchError() {
+        if (getMvpView() != null) {
+            getMvpView().showRepositoriesFetchError();
+        }
+    }
+
+    private void onRepositoriesFetched(List<Repository> repositories) {
+        getPresentationModel().setRepositories(repositories);
+        if (getMvpView() != null) {
+            getMvpView().showRepositoriesList(repositories);
+        }
     }
 }

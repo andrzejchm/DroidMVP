@@ -16,23 +16,30 @@
 
 package io.appflate.droidvmp.androidsample.di;
 
-import io.appflate.droidvmp.androidsample.ui.fragments.RepositoriesFragment;
-import javax.inject.Singleton;
-
-import dagger.Component;
-import io.appflate.droidvmp.androidsample.ui.activities.MainActivity;
-import io.appflate.droidvmp.androidsample.ui.activities.RepositoriesActivity;
+import dagger.Module;
+import dagger.Provides;
 import io.appflate.droidvmp.androidsample.domain.GithubApi;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by andrzejchm on 23/04/16.
  */
-@Singleton
-@Component(modules = { AppModule.class})
-public interface AppComponent {
-    GithubApi getRestService();
+@Module public class AppModule {
 
-    void inject(MainActivity mainActivity);
-    void inject(RepositoriesActivity repositoriesActivity);
-    void inject(RepositoriesFragment repositoriesFragment);
+    private String baseUrl;
+
+    public AppModule(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    @Provides GithubApi provideRestService() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl)
+                                                  .addConverterFactory(
+                                                      GsonConverterFactory.create())
+                                                  .build();
+
+        GithubApi githubApi = retrofit.create(GithubApi.class);
+        return githubApi;
+    }
 }

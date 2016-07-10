@@ -18,7 +18,6 @@ package io.appflate.droidvmp.androidsample.model.presentation;
 
 import io.appflate.droidvmp.androidsample.model.User;
 import java.io.Serializable;
-import javax.inject.Inject;
 
 /**
  * Created by andrzejchm on 21/06/16.
@@ -26,9 +25,6 @@ import javax.inject.Inject;
 public class MainPresentationModel implements Serializable {
     private String login;
     private User   user;
-
-    @Inject public MainPresentationModel() {
-    }
 
     public String getLogin() {
         return login;
