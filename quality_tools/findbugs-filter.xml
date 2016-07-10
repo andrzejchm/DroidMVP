@@ -24,6 +24,11 @@
     <Match>
         <Class name="~.*TestUtils"/>
     </Match>
+
+    <!-- Do not check TestUtils class -->
+    <Match>
+        <Class name="~.*TestMocks"/>
+    </Match>
     <!-- fields gets initialized in onCreate mostly in fragments -->
     <Match>
         <Class name="~.*Fragment"/>

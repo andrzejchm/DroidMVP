@@ -18,32 +18,12 @@ package io.appflate.droidvmp.androidsample;
 
 import android.app.Application;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import io.appflate.droidvmp.androidsample.di.AppComponent;
-import io.appflate.droidvmp.androidsample.di.AppModule;
-import io.appflate.droidvmp.androidsample.di.DaggerAppComponent;
-
 /**
  * Created by andrzejchm on 22/04/16.
  */
 public class SampleApplication extends Application {
-    private static final String BASE_URL = "https://api.github.com/";
-    static AppComponent appComponent;
 
-    @Override
-    public void onCreate() {
+    @Override public void onCreate() {
         super.onCreate();
-        setupGraph();
-    }
-
-    @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    protected void setupGraph() {
-        appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(BASE_URL))
-                .build();
-    }
-
-    public static AppComponent getComponent() {
-        return appComponent;
     }
 }

@@ -32,7 +32,7 @@ Add it in your root `build.gradle` at the end of repositories:
 Add the dependency to your app's `build.gradle`
 ```groovy  
   dependencies {
-    compile 'com.github.andrzejchm:DroidMVP:0.1.1'
+    compile 'com.github.andrzejchm:DroidMVP:0.1.2'
   }
 ```
 
@@ -44,5 +44,9 @@ This library makes it easy to use it with dependency injection frameworks like [
 
 ##Sample Project
 A small android app which uses Dependency Injection along with **DroidMVP** can be found 
-[**here**](/sample)
+[**here**](/sample-dagger)
+
+ Without dagger can be found [**here**](/sample).
+ 
+ With `Parcelable` PresentationModel can be found [**here**](/sample-parcelable).
 

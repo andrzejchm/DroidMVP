@@ -20,9 +20,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import java.io.Serializable;
 
-public abstract class DroidMVPFragment<M extends Serializable, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>>
+public abstract class DroidMVPFragment<M, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>>
     extends Fragment implements DroidMVPView {
 
     private DroidMVPViewDelegate<M, V, P> mvpDelegate = new DroidMVPViewDelegate<M, V, P>() {
@@ -37,7 +36,7 @@ public abstract class DroidMVPFragment<M extends Serializable, V extends DroidMV
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        performFieldInection();
+        performFieldInjection();
         mvpDelegate.onCreate(this, savedInstanceState);
     }
 
@@ -61,13 +60,17 @@ public abstract class DroidMVPFragment<M extends Serializable, V extends DroidMV
         mvpDelegate.onDestroy();
     }
 
+    @NonNull protected P getPresenter() {
+        return mvpDelegate.getPresenter();
+    }
+
     /**
      * Used for performing field injection trough various dependency injection frameworks like
      * Dagger. The injection is performed just before the #createPresenter() or
      * #createPresentationModel() methods are called, so you can
      * have your presenter and/or Presentation Model being injected by Dagger.
      */
-    protected abstract void performFieldInection();
+    protected abstract void performFieldInjection();
 
     /**
      * Used for creating the presenter instance, called in #onCreate(Bundle) method.
@@ -85,6 +88,7 @@ public abstract class DroidMVPFragment<M extends Serializable, V extends DroidMV
      *
      * You can retrieve the arguments from #getArguments() method of your
      * fragment and pass it to your Presentation's model constructor.
+     *
      * @return Presentation Model instance used by your Presenter.
      */
     @NonNull protected abstract M createPresentationModel();
