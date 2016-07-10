@@ -22,7 +22,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import java.io.Serializable;
 
-public abstract class DroidMVPActivity<M extends Serializable, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>>
+public abstract class DroidMVPActivity<M, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>>
     extends AppCompatActivity implements DroidMVPView {
 
     private DroidMVPViewDelegate<M, V, P> mvpDelegate = new DroidMVPViewDelegate<M, V, P>() {

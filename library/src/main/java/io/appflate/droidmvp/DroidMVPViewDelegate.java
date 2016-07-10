@@ -17,18 +17,22 @@
 package io.appflate.droidmvp;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.Serializable;
 
 /**
- * Class that makes it possible to write your own custom MVP Views that will fit in the DroidMVP structure.
- * It is tightly coupled with the common android component's lifecycle, like onCreate, onStart, onStop,
- * onSaveInstanceState and onDestroy to properly recover the model on configuration changes and making sure
+ * Class that makes it possible to write your own custom MVP Views that will fit in the DroidMVP
+ * structure.
+ * It is tightly coupled with the common android component's lifecycle, like onCreate, onStart,
+ * onStop,
+ * onSaveInstanceState and onDestroy to properly recover the model on configuration changes and
+ * making sure
  * your presenters won't leak your views when those are supposed to be destroyed.
  */
-public abstract class DroidMVPViewDelegate<M extends Serializable, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>> {
+public abstract class DroidMVPViewDelegate<M, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>> {
 
     private P presenter;
     private M presentationModel;
@@ -36,15 +40,17 @@ public abstract class DroidMVPViewDelegate<M extends Serializable, V extends Dro
     private String presentationModelKey;
 
     /**
-     * Commonly called from fragment's/activity's onCreate. Presentation Model is either created or restored
+     * Commonly called from fragment's/activity's onCreate. Presentation Model is either created or
+     * restored
      * here.
+     *
      * @param mvpView the MVP view that is being created.
      * @param savedInstanceState instanceState provided by android framework in which we store the
      * Presentation Model
      */
     public void onCreate(DroidMVPView mvpView, @Nullable Bundle savedInstanceState) {
         presentationModelKey = mvpView.getClass().getCanonicalName() + "$PresentationModel";
-        presentationModel = restorePresentationModel(getClass(), savedInstanceState);
+        presentationModel = restorePresentationModel(savedInstanceState);
         if (presentationModel == null) {
             presentationModel = createPresentationModel();
         }
@@ -52,18 +58,19 @@ public abstract class DroidMVPViewDelegate<M extends Serializable, V extends Dro
     }
 
     /**
-     * Commonly called from fragment's/activity's onStart. Used for attaching the view to presenter,
+     * Commonly called from fragment's/activity's onStart. Used for attaching the view to
+     * presenter,
      * so the presenter can start to update the view's state
      */
-    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
-    public void onStart(V mvpView) {
+    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR") public void onStart(V mvpView) {
         checkPresenter();
         checkPresentationModel();
         presenter.attachView(mvpView, presentationModel);
     }
 
     /**
-     * Commonly called from fragment's/activity's onStop. Used for detaching the view from presenter, so no
+     * Commonly called from fragment's/activity's onStop. Used for detaching the view from
+     * presenter, so no
      * memory leaks happen.
      */
     @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR") public void onStop() {
@@ -72,8 +79,10 @@ public abstract class DroidMVPViewDelegate<M extends Serializable, V extends Dro
     }
 
     /**
-     * Commonly called from fragment's/activity's onDestroy. Used to notify the presenter that the view
-     * will no longer be attached to the presenter, so all the long running tasks have to be terminated
+     * Commonly called from fragment's/activity's onDestroy. Used to notify the presenter that the
+     * view
+     * will no longer be attached to the presenter, so all the long running tasks have to be
+     * terminated
      * and the context should be cleared.
      */
     @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR") public void onDestroy() {
@@ -83,10 +92,17 @@ public abstract class DroidMVPViewDelegate<M extends Serializable, V extends Dro
 
     /**
      * Used by the delegate to persist current Presentation Model due to configuration change.
-     * @param outState
      */
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(presentationModelKey, presentationModel);
+        if (presentationModel instanceof Parcelable) {
+            outState.putParcelable(presentationModelKey, (Parcelable) presentationModel);
+        } else if (presentationModel instanceof Serializable) {
+            outState.putSerializable(presentationModelKey, (Serializable) presentationModel);
+        } else {
+            throw new IllegalArgumentException(
+                "Your presentation model must either implement Parcelable or Serializable interface: "
+                    + presentationModel.getClass().getCanonicalName());
+        }
     }
 
     public P getPresenter() {
@@ -111,10 +127,9 @@ public abstract class DroidMVPViewDelegate<M extends Serializable, V extends Dro
         }
     }
 
-    private M restorePresentationModel(Class stateViewClass, @Nullable Bundle savedInstanceState) {
+    private M restorePresentationModel(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            Serializable potentialPresentationModel =
-                savedInstanceState.getSerializable(presentationModelKey);
+            Object potentialPresentationModel = savedInstanceState.get(presentationModelKey);
             try {
                 return (M) potentialPresentationModel;
             } catch (ClassCastException ex) {

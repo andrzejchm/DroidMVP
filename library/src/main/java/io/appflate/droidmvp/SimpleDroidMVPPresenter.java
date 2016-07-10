@@ -16,26 +16,21 @@
 
 package io.appflate.droidmvp;
 
-import java.io.Serializable;
-
 /**
- * Base class that implements the DroidMVPPresenter interface and provides a base implementation for
+ * Base class that implements the DroidMVPPresenter interface and provides a base implementation
+ * for
  * attachView() and detachView(). It also handles keeping a reference to the mvpView that
  * can be accessed from the child classes by calling getMvpView().
  */
-public abstract class SimpleDroidMVPPresenter<V extends DroidMVPView, M extends Serializable>
-    implements DroidMVPPresenter<V,M> {
+public abstract class SimpleDroidMVPPresenter<V extends DroidMVPView, M>
+    implements DroidMVPPresenter<V, M> {
 
     private M presentationModel;
-    private   V mvpView;
+    private V mvpView;
 
     @Override public void attachView(V mvpView, M presentationModel) {
         this.mvpView = mvpView;
         this.presentationModel = presentationModel;
-    }
-
-    public M getPresentationModel() {
-        return presentationModel;
     }
 
     @Override public void detachView() {
@@ -48,6 +43,10 @@ public abstract class SimpleDroidMVPPresenter<V extends DroidMVPView, M extends 
      */
     @Override public void onDestroy() {
 
+    }
+
+    public M getPresentationModel() {
+        return presentationModel;
     }
 
     protected V getMvpView() {
