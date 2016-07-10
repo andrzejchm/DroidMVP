@@ -44,5 +44,5 @@ This library makes it easy to use it with dependency injection frameworks like [
 
 ##Sample Project
 A small android app which uses Dependency Injection along with **DroidMVP** can be found 
-[**here**](/sample)
+[**here**](/sample-dagger), and one without dagger can be found [**here**](/sample).
 

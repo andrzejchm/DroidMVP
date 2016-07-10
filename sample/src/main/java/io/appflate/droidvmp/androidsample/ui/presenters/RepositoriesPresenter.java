@@ -22,7 +22,6 @@ import io.appflate.droidvmp.androidsample.model.Repository;
 import io.appflate.droidvmp.androidsample.model.presentation.RepositoriesPresentationModel;
 import io.appflate.droidvmp.androidsample.ui.mvpviews.RepositoriesView;
 import java.util.List;
-import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +33,7 @@ public class RepositoriesPresenter
     extends SimpleDroidMVPPresenter<RepositoriesView, RepositoriesPresentationModel> {
     private GithubApi githubApi;
 
-    @Inject public RepositoriesPresenter(GithubApi githubApi) {
+    public RepositoriesPresenter(GithubApi githubApi) {
         this.githubApi = githubApi;
     }
 

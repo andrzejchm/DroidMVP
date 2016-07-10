@@ -27,7 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.appflate.droidvmp.androidsample.R;
-import io.appflate.droidvmp.androidsample.SampleApplication;
+import io.appflate.droidvmp.androidsample.domain.ApiManager;
 import io.appflate.droidvmp.androidsample.model.presentation.MainPresentationModel;
 import io.appflate.droidvmp.androidsample.ui.base.BaseActivity;
 import io.appflate.droidvmp.androidsample.ui.mvpviews.MainView;
@@ -52,8 +52,8 @@ public class MainActivity extends BaseActivity<MainPresentationModel, MainView, 
         ButterKnife.bind(this);
     }
 
-    @Override protected void performFieldInjection() {
-        SampleApplication.getComponent().inject(this);
+    @NonNull @Override protected MainPresenter createPresenter() {
+        return new MainPresenter(ApiManager.getInstance().getApiService());
     }
 
     @NonNull @Override protected MainPresentationModel createPresentationModel() {
@@ -85,10 +85,10 @@ public class MainActivity extends BaseActivity<MainPresentationModel, MainView, 
     @OnClick(R.id.submitButton) void onSubmitClicked() {
         KeyboardUtils.hideKeyboard(this);
         String username = usernameEditText.getText().toString();
-        presenter.onSubmitClicked(username);
+        getPresenter().onSubmitClicked(username);
     }
 
     @OnClick(R.id.showReposButton) void onShowReposClicked() {
-        presenter.onShowReposClicked();
+        getPresenter().onShowReposClicked();
     }
 }

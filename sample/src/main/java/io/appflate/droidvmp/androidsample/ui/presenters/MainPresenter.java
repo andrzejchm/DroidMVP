@@ -21,7 +21,6 @@ import io.appflate.droidvmp.androidsample.domain.GithubApi;
 import io.appflate.droidvmp.androidsample.model.User;
 import io.appflate.droidvmp.androidsample.model.presentation.MainPresentationModel;
 import io.appflate.droidvmp.androidsample.ui.mvpviews.MainView;
-import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,9 +31,7 @@ import retrofit2.Response;
 public class MainPresenter extends SimpleDroidMVPPresenter<MainView, MainPresentationModel> {
     private final GithubApi githubApi;
 
-    //Keep in mind that you have to annotate your constructor with @Inject annotation
-    // for the injection to work properly.
-    @Inject MainPresenter(GithubApi githubApi) {
+    public MainPresenter(GithubApi githubApi) {
         this.githubApi = githubApi;
     }
 
