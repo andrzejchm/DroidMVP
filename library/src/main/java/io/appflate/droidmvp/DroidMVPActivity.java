@@ -20,20 +20,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import java.io.Serializable;
 
 public abstract class DroidMVPActivity<M, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>>
     extends AppCompatActivity implements DroidMVPView {
 
-    private DroidMVPViewDelegate<M, V, P> mvpDelegate = new DroidMVPViewDelegate<M, V, P>() {
-        @NonNull @Override protected P createPresenter() {
-            return DroidMVPActivity.this.createPresenter();
-        }
+    private DroidMVPViewDelegate<M, V, P> mvpDelegate =
+        new DroidMVPViewDelegate<M, V, P>(createPresentationModelSerializer()) {
+            @NonNull @Override protected P createPresenter() {
+                return DroidMVPActivity.this.createPresenter();
+            }
 
-        @NonNull @Override protected M createPresentationModel() {
-            return DroidMVPActivity.this.createPresentationModel();
-        }
-    };
+            @NonNull @Override protected M createPresentationModel() {
+                return DroidMVPActivity.this.createPresentationModel();
+            }
+        };
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +63,18 @@ public abstract class DroidMVPActivity<M, V extends DroidMVPView, P extends Droi
 
     @NonNull protected P getPresenter() {
         return mvpDelegate.getPresenter();
+    }
+
+    /**
+     * Feel free to override this method that returns your own implementation of
+     * PresentationModelSerializer.
+     * Useful if you use a Parceler library for example
+     *
+     * @return an instance of PresentationModelSerializer that will serialize and deserialize your
+     * PresentationModel from Bundle.
+     */
+    protected PresentationModelSerializer<M> createPresentationModelSerializer() {
+        return new ParcelableAndSerializablePresentationModelSerializer<>();
     }
 
     /**
