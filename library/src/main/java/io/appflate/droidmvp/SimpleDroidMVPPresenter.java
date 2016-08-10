@@ -16,6 +16,8 @@
 
 package io.appflate.droidmvp;
 
+import android.support.annotation.Nullable;
+
 /**
  * Base class that implements the DroidMVPPresenter interface and provides a base implementation
  * for
@@ -49,7 +51,7 @@ public abstract class SimpleDroidMVPPresenter<V extends DroidMVPView, M>
         return presentationModel;
     }
 
-    protected V getMvpView() {
+    @Nullable protected V getMvpView() {
         return mvpView;
     }
 }
