@@ -17,11 +17,9 @@
 package io.appflate.droidmvp;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.io.Serializable;
 
 /**
  * Class that makes it possible to write your own custom MVP Views that will fit in the DroidMVP
@@ -55,7 +53,8 @@ public abstract class DroidMVPViewDelegate<M, V extends DroidMVPView, P extends 
      */
     public void onCreate(DroidMVPView mvpView, @Nullable Bundle savedInstanceState) {
         presentationModelKey = mvpView.getClass().getCanonicalName() + "$PresentationModel";
-        presentationModel = serializer.restorePresentationModel(savedInstanceState,presentationModelKey);
+        presentationModel =
+            serializer.restorePresentationModel(savedInstanceState, presentationModelKey);
         if (presentationModel == null) {
             presentationModel = createPresentationModel();
         }
