@@ -36,8 +36,13 @@ public abstract class DroidMVPViewDelegate<M, V extends DroidMVPView, P extends 
 
     private P presenter;
     private M presentationModel;
+    private final PresentationModelSerializer<M> serializer;
 
     private String presentationModelKey;
+
+    public DroidMVPViewDelegate(@NonNull PresentationModelSerializer<M> serializer) {
+        this.serializer = serializer;
+    }
 
     /**
      * Commonly called from fragment's/activity's onCreate. Presentation Model is either created or
@@ -50,7 +55,7 @@ public abstract class DroidMVPViewDelegate<M, V extends DroidMVPView, P extends 
      */
     public void onCreate(DroidMVPView mvpView, @Nullable Bundle savedInstanceState) {
         presentationModelKey = mvpView.getClass().getCanonicalName() + "$PresentationModel";
-        presentationModel = restorePresentationModel(savedInstanceState);
+        presentationModel = serializer.restorePresentationModel(savedInstanceState,presentationModelKey);
         if (presentationModel == null) {
             presentationModel = createPresentationModel();
         }
@@ -95,15 +100,7 @@ public abstract class DroidMVPViewDelegate<M, V extends DroidMVPView, P extends 
      */
     @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR") public void onSaveInstanceState(
         Bundle outState) {
-        if (presentationModel instanceof Parcelable) {
-            outState.putParcelable(presentationModelKey, (Parcelable) presentationModel);
-        } else if (presentationModel instanceof Serializable) {
-            outState.putSerializable(presentationModelKey, (Serializable) presentationModel);
-        } else {
-            throw new IllegalArgumentException(
-                "Your presentation model must either implement Parcelable or Serializable interface: "
-                    + presentationModel.getClass().getCanonicalName());
-        }
+        serializer.savePresentationModel(outState, presentationModelKey, presentationModel);
     }
 
     public P getPresenter() {
@@ -126,19 +123,5 @@ public abstract class DroidMVPViewDelegate<M, V extends DroidMVPView, P extends 
             throw new IllegalStateException(
                 "seems like you forgot to create presentationModel in #createPresentationModel() method, or call the #onCreate() of this delegate");
         }
-    }
-
-    private M restorePresentationModel(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            Object potentialPresentationModel = savedInstanceState.get(presentationModelKey);
-            try {
-                return (M) potentialPresentationModel;
-            } catch (ClassCastException ex) {
-                throw new IllegalStateException(String.format(
-                    "We expected a presentationModel saved in the bundle under the key: \"%s\", but was: %s",
-                    presentationModelKey, potentialPresentationModel.toString()));
-            }
-        }
-        return null;
     }
 }
