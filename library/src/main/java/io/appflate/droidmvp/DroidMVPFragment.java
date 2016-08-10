@@ -24,15 +24,16 @@ import android.support.v4.app.Fragment;
 public abstract class DroidMVPFragment<M, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>>
     extends Fragment implements DroidMVPView {
 
-    private DroidMVPViewDelegate<M, V, P> mvpDelegate = new DroidMVPViewDelegate<M, V, P>() {
-        @NonNull @Override protected P createPresenter() {
-            return DroidMVPFragment.this.createPresenter();
-        }
+    private DroidMVPViewDelegate<M, V, P> mvpDelegate =
+        new DroidMVPViewDelegate<M, V, P>(createPresentationModelSerializer()) {
+            @NonNull @Override protected P createPresenter() {
+                return DroidMVPFragment.this.createPresenter();
+            }
 
-        @NonNull @Override protected M createPresentationModel() {
-            return DroidMVPFragment.this.createPresentationModel();
-        }
-    };
+            @NonNull @Override protected M createPresentationModel() {
+                return DroidMVPFragment.this.createPresentationModel();
+            }
+        };
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,18 @@ public abstract class DroidMVPFragment<M, V extends DroidMVPView, P extends Droi
     @Override public void onDestroy() {
         super.onDestroy();
         mvpDelegate.onDestroy();
+    }
+
+    /**
+     * Feel free to override this method that returns your own implementation of
+     * PresentationModelSerializer.
+     * Useful if you use a Parceler library for example
+     *
+     * @return an instance of PresentationModelSerializer that will serialize and deserialize your
+     * PresentationModel from Bundle.
+     */
+    protected PresentationModelSerializer<M> createPresentationModelSerializer() {
+        return new ParcelableAndSerializablePresentationModelSerializer<>();
     }
 
     @NonNull protected P getPresenter() {
