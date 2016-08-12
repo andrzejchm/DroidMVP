@@ -40,7 +40,7 @@ Add the dependency to your app's `build.gradle`
 If by any chance you cannot extend from `DroidMVPActivity` or `DroidMVPFragment` you can always use the `DroidMVPViewDelegate`. Just make sure to bind it with your activity's or fragment's lifecycle the same way the `DroidMVPFragment` or `DroidMVPActivity` does it.
 
 ##Dependency Injection
-This library makes it easy to use it with dependency injection frameworks like [Dagger](http://google.github.io/dagger/). To see how it could be done, check out the [**Sample project**](/sample), specifically the `BaseFragment` or `BaseActivity`
+This library makes it easy to use it with dependency injection frameworks like [Dagger](http://google.github.io/dagger/). To see how it could be done, check out the [**Sample project**](/sample-dagger), specifically the `BaseFragment` or `BaseActivity`
 
 ##Sample Project
 A small android app which uses Dependency Injection along with **DroidMVP** can be found 
