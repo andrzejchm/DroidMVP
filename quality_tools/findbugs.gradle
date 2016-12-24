@@ -15,13 +15,14 @@
  */
 
 apply plugin: 'findbugs'
+apply plugin: 'maven'
 
 task findbugs(type: FindBugs) {
     ignoreFailures = false // Fail early.
     effort = 'max'
     reportLevel = 'low' // Report even low priority problems.
 
-    if(project.projectDir.path.endsWith("core")) {
+    if(project.projectDir.path.endsWith("presentation")) {
         classes = files("${project.projectDir}/build/classes/")
     } else {
         classes = files("${project.projectDir}/build/intermediates/classes/")
