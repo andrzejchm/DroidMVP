@@ -24,14 +24,14 @@ test:
     - mkdir -p $CIRCLE_ARTIFACTS/sample/test-results
     - mkdir -p $CIRCLE_ARTIFACTS/sample-dagger/reports
     - mkdir -p $CIRCLE_ARTIFACTS/sample-dagger/test-results
-    - mkdir -p $CIRCLE_ARTIFACTS/library/reports
-    - mkdir -p $CIRCLE_ARTIFACTS/library/test-results
+    - mkdir -p $CIRCLE_ARTIFACTS/app/reports
+    - mkdir -p $CIRCLE_ARTIFACTS/app/test-results
     - cp -r sample/build/test-results/ $CIRCLE_ARTIFACTS/sample/test-results
     - cp -r sample/build/reports/ $CIRCLE_ARTIFACTS/sample/reports
     - cp -r sample/build/outputs/ $CIRCLE_ARTIFACTS/sample/outputs
     - cp -r sample-dagger/build/test-results/ $CIRCLE_ARTIFACTS/sample-dagger/test-results
     - cp -r sample-dagger/build/reports/ $CIRCLE_ARTIFACTS/sample-dagger/reports
     - cp -r sample-dagger/build/outputs/ $CIRCLE_ARTIFACTS/sample-dagger/outputs
-    - cp -r library/build/test-results/ $CIRCLE_ARTIFACTS/library/test-results
-    - cp -r library/build/reports/ $CIRCLE_ARTIFACTS/library/reports
+    - cp -r app/build/test-results/ $CIRCLE_ARTIFACTS/app/test-results
+    - cp -r app/build/reports/ $CIRCLE_ARTIFACTS/app/reports
     - cp -r library/build/outputs/ $CIRCLE_ARTIFACTS/library/outputs
