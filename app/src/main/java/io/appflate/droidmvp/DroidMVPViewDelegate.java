@@ -30,7 +30,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * making sure
  * your presenters won't leak your views when those are supposed to be destroyed.
  */
-public abstract class DroidMVPViewDelegate<M, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>> {
+public abstract class DroidMVPViewDelegate<M, V, P extends DroidMVPPresenter<V, M>> {
 
     private P presenter;
     private M presentationModel;
@@ -51,7 +51,7 @@ public abstract class DroidMVPViewDelegate<M, V extends DroidMVPView, P extends 
      * @param savedInstanceState instanceState provided by android framework in which we store the
      * Presentation Model
      */
-    public void onCreate(DroidMVPView mvpView, @Nullable Bundle savedInstanceState) {
+    public void onCreate(V mvpView, @Nullable Bundle savedInstanceState) {
         presentationModelKey = mvpView.getClass().getCanonicalName() + "$PresentationModel";
         presentationModel =
             serializer.restorePresentationModel(savedInstanceState, presentationModelKey);

@@ -21,7 +21,7 @@ package io.appflate.droidmvp;
  * SimpleDroidMVPPresenter
  * indicating the DroidMVPView type that wants to be attached with.
  */
-public interface DroidMVPPresenter<V extends DroidMVPView, M> {
+public interface DroidMVPPresenter<V, M> {
 
     void attachView(V mvpView, M presentationModel);
 

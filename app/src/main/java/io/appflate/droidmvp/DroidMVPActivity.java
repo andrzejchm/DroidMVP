@@ -21,8 +21,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-public abstract class DroidMVPActivity<M, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>>
-    extends AppCompatActivity implements DroidMVPView {
+public abstract class DroidMVPActivity<M, V, P extends DroidMVPPresenter<V, M>>
+    extends AppCompatActivity {
 
     private DroidMVPViewDelegate<M, V, P> mvpDelegate =
         new DroidMVPViewDelegate<M, V, P>(createPresentationModelSerializer()) {
@@ -38,7 +38,7 @@ public abstract class DroidMVPActivity<M, V extends DroidMVPView, P extends Droi
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         performFieldInjection();
-        mvpDelegate.onCreate(this, savedInstanceState);
+        mvpDelegate.onCreate((V) this, savedInstanceState);
     }
 
     @Override protected void onStop() {

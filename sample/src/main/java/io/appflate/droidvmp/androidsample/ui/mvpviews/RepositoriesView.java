@@ -16,14 +16,13 @@
 
 package io.appflate.droidvmp.androidsample.ui.mvpviews;
 
-import io.appflate.droidmvp.DroidMVPView;
 import io.appflate.droidvmp.androidsample.model.Repository;
 import java.util.List;
 
 /**
  * Created by andrzejchm on 22/06/16.
  */
-public interface RepositoriesView extends DroidMVPView {
+public interface RepositoriesView {
     void showTitle(String username);
 
     void showLoadingProgress();

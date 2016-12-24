@@ -16,12 +16,10 @@
 
 package io.appflate.droidvmp.androidsample.ui.mvpviews;
 
-import io.appflate.droidmvp.DroidMVPView;
-
 /**
  * Created by andrzejchm on 21/06/16.
  */
-public interface MainView extends DroidMVPView {
+public interface MainView {
     void showProgress();
 
     void showUserInfo(String showUserFetchSuccess);

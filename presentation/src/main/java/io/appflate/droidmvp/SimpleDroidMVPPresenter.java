@@ -22,7 +22,7 @@ package io.appflate.droidmvp;
  * attachView() and detachView(). It also handles keeping a reference to the mvpView that
  * can be accessed from the child classes by calling getMvpView().
  */
-public abstract class SimpleDroidMVPPresenter<V extends DroidMVPView, M> implements DroidMVPPresenter<V, M> {
+public abstract class SimpleDroidMVPPresenter<V, M> implements DroidMVPPresenter<V, M> {
 
     private M presentationModel;
     private V mvpView;

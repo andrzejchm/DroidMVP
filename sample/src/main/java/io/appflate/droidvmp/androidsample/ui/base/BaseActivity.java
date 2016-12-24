@@ -18,12 +18,11 @@ package io.appflate.droidvmp.androidsample.ui.base;
 
 import io.appflate.droidmvp.DroidMVPActivity;
 import io.appflate.droidmvp.DroidMVPPresenter;
-import io.appflate.droidmvp.DroidMVPView;
 
 /**
  * Created by andrzejchm on 22/06/16.
  */
-public abstract class BaseActivity<M, V extends DroidMVPView, P extends DroidMVPPresenter<V, M>>
+public abstract class BaseActivity<M, V, P extends DroidMVPPresenter<V, M>>
     extends DroidMVPActivity<M, V, P> {
 
     @Override protected void performFieldInjection() {
